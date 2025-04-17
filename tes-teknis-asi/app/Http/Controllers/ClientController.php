@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use Illuminate\Support\Facades\Redis;
+use Carbon\Carbon;
 
 class ClientController extends Controller
 {
@@ -15,6 +16,11 @@ class ClientController extends Controller
 
     public function create(){
         return view('create_client');
+    }
+    
+    public function edit($id){
+        $client = Client::findOrFail($id);
+        return view('edit_client', compact('client'));
     }
 
     public function store(Request $request){
@@ -53,7 +59,7 @@ class ClientController extends Controller
     public function update(Request $request, $id){
         $request->validate([
             'name' => 'required|string|max:250',
-            'slug' => 'required|string|max:100|unique:my_clients,slug,' . $id, 
+            'slug' => 'required|string|max:100|unique:clients,slug,' . $id, 
             'address' => 'nullable|string',
             'phone_number' => 'nullable|string',
             'city' => 'nullable|string',

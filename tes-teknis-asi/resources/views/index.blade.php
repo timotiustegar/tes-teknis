@@ -8,6 +8,7 @@
 <body>
     <h1>Client List</h1>
     <a href="{{ route('create-client') }}">Add New Client</a>
+    <a href="{{ route('check-redis') }}">Check Redis</a>
     <table border="1">
         <thead>
             <tr>
@@ -28,8 +29,8 @@
                     <td>{{ $client->is_project }}</td>
                     <td>{{ $client->city }}</td>
                     <td>
-                        <a>Edit</a> |
-                        <form method="POST" style="display:inline;">
+                        <a href="{{ route('edit-client', $client->id) }}">Edit</a> |
+                        <form action="{{ route('destroy-client', $client->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Delete</button>
